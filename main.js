@@ -82,10 +82,8 @@ function idInvalidCardCompanies(arrCardInvalid) {
         break;
     }
   })
-  console.log(arrCompany);
   let uniqueCompany = [...new Set(arrCompany)];
-  console.log(uniqueCompany);
   return uniqueCompany;
 }
 
-idInvalidCardCompanies(findInvalidCards(batch))
+console.log(idInvalidCardCompanies(findInvalidCards(batch)));
