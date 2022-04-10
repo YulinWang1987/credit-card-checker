@@ -19,6 +19,7 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3];
 // An array of all the arrays above
 const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5];
 // Add your functions below:
+//Card number validation
 function validateCred(arr) {
   let sum = 0;
   if (arr.length % 2 !== 0) {
@@ -86,4 +87,57 @@ function idInvalidCardCompanies(arrCardInvalid) {
   return uniqueCompany;
 }
 
-console.log(idInvalidCardCompanies(findInvalidCards(batch)));
+// accepts a strong and converts it into an array of numbers as demonstrated
+function strToArr(str) {
+  let arrNum = str.split("").map (x => {
+    return Math.floor(x);
+  })
+  return arrNum;
+}
+
+// convert invalid card number to valid card number
+function sumCal(arr) {
+  let sum = 0;
+  if (arr.length % 2 !== 0) {
+    for (let i = 0; i < arr.length; i ++) {
+      if (i % 2 === 0) {
+        sum += arr[i];
+      } else {
+        if (arr[i] * 2 < 10) {
+          sum += (arr[i] * 2);
+        } else {
+          sum += (arr[i] * 2 - 9);
+        }
+      }
+    }
+  } else {
+   for (let i = 0; i < arr.length; i ++) {
+      if (i % 2 !== 0) {
+        sum += arr[i];
+      } else {
+        if (arr[i] * 2 < 10) {
+          sum += (arr[i] * 2);
+        } else {
+          sum += (arr[i] * 2 - 9);
+        }
+      }
+    }
+  }
+  return sum;
+}
+
+function convert(arr) {
+  if (validateCred(arr)) {
+    return arr;
+  } else {
+    let numAdj = sumCal(arr) % 10;
+    let lastDig;
+    if ((arr[arr.length - 1] + numAdj) < 10) {
+      lastDig = arr[arr.length - 1] + numAdj;
+    } else {
+      lastDig = arr[arr.length - 1] + numAdj - 10;
+    }
+    arr[arr.length - 1] = lastDig;
+    return arr;
+  }
+}
